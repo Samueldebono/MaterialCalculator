@@ -1,0 +1,125 @@
+﻿@using Material.Calculator.Models
+@using Material.Calculator.Models.Banner
+
+@model CalculatorModel
+@{
+    ViewBag.Title = "Calculator";
+}
+
+@Html.Partial("_heroBanner",new Banner{Title = @ViewBag.Title})
+
+<link type="text/css" rel="stylesheet" href="/Content/css/CalculatorStyle.css"/>
+
+<div class="form-style-3">
+    <form method="post">
+
+        <feildset class="col col-lg-12">
+        
+            <div class="row">
+                @*PRODUCT TYPE*@
+
+                <div class="col-lg-4">
+                    <legend>Product Type</legend>
+                    <div class="row">
+                        <div class="col col-lg-6">
+                            @Html.DisplayNameFor(m => m.ProductType)
+                        </div>
+                        <div class="col col-lg-6">
+                            @Html.DropDownListFor(m => m.ProductType, new SelectList(ViewBag.ProductTypesList, "Value", "Text"),
+                                (object) new {@class = "form-control select", @placeholder = "Status"})
+
+                        </div>
+                    </div>
+               
+                </div>
+                @*AREA*@
+                <div class="col col-lg-4">
+                    <legend>Area</legend>
+                    <div class="row">
+                        <div class="col col-lg-6">
+                            @Html.DisplayNameFor(m => m.Length)
+                        </div>
+                        <div class="col col-lg-6">
+                            @Html.TextBoxFor(m => m.Length)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-6">
+                            @Html.DisplayNameFor(m => m.Width)
+                        </div>
+                        <div class="col col-lg-6">
+                            @Html.TextBoxFor(m => m.Width)
+                        </div>
+                    </div>
+                </div>
+                @*DEPTH*@
+                <div class="col col-lg-4">
+                    <legend>Depth</legend>
+                    <div class="row">
+                        <div class="col col-lg-6">
+                            @Html.DisplayNameFor(m => m.Depth)
+                        </div>
+                        <div class="col col-lg-6">
+                            @Html.TextBoxFor(m => m.Depth)
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+            <legend>Results</legend>
+          
+
+                @if (Model.ResultsCubes > 0 || Model.ResultsTonnes > 0)
+                {
+            <div class="row results">
+
+
+                @if (Model.ResultsCubes > 0)
+                {
+                    <div class="col-lg-1">
+                        @Html.DisplayNameFor(m => m.ResultsCubes)
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(m => m.ResultsCubes, new { @disabled = "disabled" })
+                    </div>
+                }
+
+
+                @if (Model.ResultsTonnes > 0)
+                {
+                    <div class="col-lg-1">
+                        @Html.DisplayNameFor(m => m.ResultsTonnes)
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(m => m.ResultsTonnes, new { @disabled = "disabled" })
+
+                    </div>
+                }
+            </div>
+                }
+            @*BUTTONS*@
+            <div class="row buttons">
+                <div class="col-lg-4">
+                    <input type="submit" value="GO"/>
+                </div>
+            </div>
+            <div class="row buttons">
+                <div class="col-lg-4">
+                    <input type="reset" value="Reset" />
+                </div>
+            </div>
+        </feildset>
+    </form>
+   
+    </div>
+
+    @*<style>
+        body {
+            background: gray;
+            color: white;
+        }
+
+        form {
+            color: black;
+        }
+    </style>*@
