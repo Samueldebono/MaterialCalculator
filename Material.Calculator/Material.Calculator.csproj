@@ -146,6 +146,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\CalculatorStyle.css" />
     <Content Include="Content\css\HeroStyleSheet.css" />
+    <Content Include="Content\img\circle.png" />
+    <Content Include="Content\img\square.png" />
+    <Content Include="Content\img\triangle.png" />
     <Content Include="Content\img\Website banner.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

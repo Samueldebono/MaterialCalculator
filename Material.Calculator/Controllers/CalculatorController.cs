@@ -18,6 +18,8 @@ namespace Material.Calculator.Controllers
 
             ViewBag.ProductTypesList = await 
                 BusinessClients.GlobalsBusiness.GetProductypes();
+            ViewBag.AreaTypesList = await 
+                BusinessClients.GlobalsBusiness.GetAreaTypes();
 
             CalculatorModel model = new CalculatorModel();
             return View(model);
@@ -27,7 +29,11 @@ namespace Material.Calculator.Controllers
         {
             ViewBag.ProductTypesList = await
                 BusinessClients.GlobalsBusiness.GetProductypes();
-            model.ResultsCubes = model.Length * model.Depth * (model.Width/10);
+            ViewBag.AreaTypesList = await
+                BusinessClients.GlobalsBusiness.GetAreaTypes();
+
+            if(model.Length.HasValue && model.Width.HasValue)
+            model.ResultsCubes = model.Length.Value * model.Width.Value * (model.Depth / 10);
             model.ResultsTonnes = BusinessClients.GlobalsBusiness.GetConversationRate(model.ProductType, model.ResultsCubes);
 
 

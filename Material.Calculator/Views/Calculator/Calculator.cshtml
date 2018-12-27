@@ -4,11 +4,30 @@
 @model CalculatorModel
 @{
     ViewBag.Title = "Calculator";
+
 }
 
 @Html.Partial("_heroBanner",new Banner{Title = @ViewBag.Title})
 
 <link type="text/css" rel="stylesheet" href="/Content/css/CalculatorStyle.css"/>
+<script>
+    function leaveChange(control) {
+        
+        if (control.value == "0") {
+            $("#imageHolder").attr("src", "/Content/img/square.png"); 
+        } else if (control.value == "1") {
+
+            $("#imageHolder").attr("src", "/Content/img/circle.png"); 
+        }
+        else if (control.value == "2") {
+
+            $("#imageHolder").attr("src", "/Content/img/triangle.png"); 
+        } else {
+
+            $("#imageHolder").attr("src", "/Content/img/square.png"); 
+        }
+    }
+</script>
 
 <div class="form-style-3">
     <form method="post">
@@ -17,7 +36,25 @@
         
             <div class="row">
                 @*PRODUCT TYPE*@
+                <div class="row">
+                    <div class="row">
+                        <div class="col col-lg-6">
+                            <legend>Area Type</legend>
+                            <div class="col col-lg-6">
+                                @Html.DisplayNameFor(m => m.AreaType)
+                            </div>
+                            <div class="col col-lg-6">
+                                @Html.DropDownListFor(m => m.AreaType, new SelectList(ViewBag.AreaTypesList, "Value", "Text"),
+                                    (object) new {@class = "form-control select", @placeholder = "Status",
+                                        @onchange = "leaveChange(this)" })
 
+                            </div>
+                        </div>
+                        <div class="col col-lg-6">
+                            <img id="imageHolder" src="~/Content/img/square.png"/>
+                        </div>
+                        </div>
+                    </div>
                 <div class="col-lg-4">
                     <legend>Product Type</legend>
                     <div class="row">
@@ -66,11 +103,10 @@
                 </div>
             </div>
        
+            @if (Model.ResultsCubes > 0 || Model.ResultsTonnes > 0)
+            {
             <legend>Results</legend>
           
-
-                @if (Model.ResultsCubes > 0 || Model.ResultsTonnes > 0)
-                {
             <div class="row results">
 
 

@@ -22,6 +22,19 @@ namespace Material.Calculator.Utility
                 .ToList();
             
         }
+        public async Task<List<SelectListItem>> GetAreaTypes()
+        {
+            var list = (CalculatorModel.AreaTypes[])(Enum.GetValues(typeof(CalculatorModel.AreaTypes)).Cast<CalculatorModel.AreaTypes>());
+
+            return list.Select(r => new SelectListItem
+                {
+                    Text = r.ToString(),
+                    Value = Convert.ToInt32(r).ToString()
+                }).OrderByDescending(r => r.Value)
+                .ToList();
+            
+        }
+
         public double GetConversationRate(ProductsModel.ProductTypes type, double cubes)
         {
             if (cubes <= 0)
@@ -62,7 +75,7 @@ namespace Material.Calculator.Utility
                 case ProductsModel.ProductTypes.GardenMix:
                     return "Garden Mix";
                 case ProductsModel.ProductTypes.Soil:
-                    return "Sand";
+                    return "Soil";
                 case ProductsModel.ProductTypes.TopSoil:
                     return "Top Soil";
                 case ProductsModel.ProductTypes.Pebbles:
