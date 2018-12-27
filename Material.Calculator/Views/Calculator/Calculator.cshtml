@@ -10,22 +10,49 @@
 @Html.Partial("_heroBanner",new Banner{Title = @ViewBag.Title})
 
 <link type="text/css" rel="stylesheet" href="/Content/css/CalculatorStyle.css"/>
-<script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        if (@Model.AreaType.Equals(CalculatorModel.AreaTypes.Square).ToString().ToLower()) {
+            $("#squareArea").show();
+            $("#imageHolder").attr("src", "/Content/img/square.png");
+        }
+        else if (@Model.AreaType.Equals(CalculatorModel.AreaTypes.Circle).ToString().ToLower()) {
+            $("#circleArea").show();
+
+            $("#imageHolder").attr("src", "/Content/img/circle.png");
+        }
+        else if (@Model.AreaType.Equals(CalculatorModel.AreaTypes.Triangle).ToString().ToLower()) {
+            $("#triangleArea").show();
+
+            $("#imageHolder").attr("src", "/Content/img/triangle.png");
+        }
+
+    });
+
     function leaveChange(control) {
-        
+
         if (control.value == "0") {
-            $("#imageHolder").attr("src", "/Content/img/square.png"); 
+            $("#imageHolder").attr("src", "/Content/img/square.png");
+            $("#squareArea").show();
+            $("#triangleArea").hide();
+            $("#circleArea").hide();
+
         } else if (control.value == "1") {
 
-            $("#imageHolder").attr("src", "/Content/img/circle.png"); 
-        }
-        else if (control.value == "2") {
+            $("#imageHolder").attr("src", "/Content/img/circle.png");
+            $("#squareArea").hide();
+            $("#triangleArea").hide();
+            $("#circleArea").show();
+        } else if (control.value == "2") {
 
-            $("#imageHolder").attr("src", "/Content/img/triangle.png"); 
-        } else {
-
-            $("#imageHolder").attr("src", "/Content/img/square.png"); 
-        }
+            $("#imageHolder").attr("src", "/Content/img/triangle.png");
+            $("#squareArea").hide();
+            $("#triangleArea").show();
+            $("#circleArea").hide();
+        } 
     }
 </script>
 
@@ -72,22 +99,61 @@
                 @*AREA*@
                 <div class="col col-lg-4">
                     <legend>Area</legend>
-                    <div class="row">
-                        <div class="col col-lg-6">
-                            @Html.DisplayNameFor(m => m.Length)
+                    <div id="squareArea" style="display: none">
+                        <div class="row">
+                            <div class="col col-lg-6">
+                                @Html.DisplayNameFor(m => m.Length)
+                            </div>
+                            <div class="col col-lg-6">
+                                @Html.TextBoxFor(m => m.Length)
+                            </div>
                         </div>
-                        <div class="col col-lg-6">
-                            @Html.TextBoxFor(m => m.Length)
+                        <div class="row">
+                            <div class="col col-lg-6">
+                                @Html.DisplayNameFor(m => m.Width)
+                            </div>
+                            <div class="col col-lg-6">
+                                @Html.TextBoxFor(m => m.Width)
+                            </div>
+                        </div>
+                        </div>
+                        <div id="circleArea" style="display: none">
+                        <div class="row">
+                            <div class="col col-lg-6">
+                                @Html.DisplayNameFor(m => m.Diameter)
+                            </div>
+                            <div class="col col-lg-6">
+                                @Html.TextBoxFor(m => m.Diameter)
+                            </div>
+                        </div>
+                        </div>
+                    <div id="triangleArea" style="display: none">
+                        <div class="row">
+                            <div class="col col-lg-6">
+                                @Html.DisplayNameFor(m => m.Edge1)
+                            </div>
+                            <div class="col col-lg-6">
+                                @Html.TextBoxFor(m => m.Edge1)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-6">
+                                @Html.DisplayNameFor(m => m.Edge2)
+                            </div>
+                            <div class="col col-lg-6">
+                                @Html.TextBoxFor(m => m.Edge2)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-6">
+                                @Html.DisplayNameFor(m => m.Edge3)
+                            </div>
+                            <div class="col col-lg-6">
+                                @Html.TextBoxFor(m => m.Edge3)
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col col-lg-6">
-                            @Html.DisplayNameFor(m => m.Width)
-                        </div>
-                        <div class="col col-lg-6">
-                            @Html.TextBoxFor(m => m.Width)
-                        </div>
-                    </div>
+                    
                 </div>
                 @*DEPTH*@
                 <div class="col col-lg-4">
