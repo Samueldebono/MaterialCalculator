@@ -35,6 +35,19 @@ namespace Material.Calculator.Utility
             
         }
 
+        public async Task<List<SelectListItem>> GetMeasurementTypes()
+        {
+            var list = (MeasurementModel.MeasurementTypes[])(Enum.GetValues(typeof(MeasurementModel.MeasurementTypes)).Cast<MeasurementModel.MeasurementTypes>());
+
+            return list.Select(r => new SelectListItem
+                {
+                    Text = r.ToString(),
+                    Value = Convert.ToInt32(r).ToString()
+                }).OrderByDescending(r => r.Value)
+                .ToList();
+        }
+
+
         public double GetConversationRate(ProductsModel.ProductTypes type, double cubes)
         {
             if (cubes <= 0)
@@ -62,6 +75,24 @@ namespace Material.Calculator.Utility
                     return cubes; 
                     
             }
+        }
+
+        public double ConvertToMillimetres(MeasurementModel.MeasurementTypes type, double numberToConvert)
+        {
+            switch (type)
+            {
+                case MeasurementModel.MeasurementTypes.CM:
+
+                    numberToConvert = numberToConvert * 0.01;
+                    break;
+                case MeasurementModel.MeasurementTypes.M:
+                    break;
+                case MeasurementModel.MeasurementTypes.MM:
+                    numberToConvert = numberToConvert * 0.001;
+                    break;
+            }
+            return numberToConvert;
+
         }
 
         public string GetStringProduct(ProductsModel.ProductTypes type)

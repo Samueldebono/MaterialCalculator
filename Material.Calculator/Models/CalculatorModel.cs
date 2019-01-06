@@ -8,35 +8,18 @@ using System.Web.UI;
 
 namespace Material.Calculator.Models
 {
-    public class CalculatorModel
+    public class CalculatorModel: MeasurementModel
     {
         [Required]
-        [DisplayName("Depth of Area")]
+        [DisplayName("Depth")]
        
         public double Depth { get; set; }
 
-        //Square
-        [DisplayName("Length of side")]
-        public double? Length { get; set; }
-        [DisplayName("Width of side")]
-        public double? Width { get; set; }
+        public MeasurementModel.MeasurementTypes DepthMeasurementTypes { get; set; }
 
-        //Circle
-        [DisplayName("Diameter of circle")]
-        public double? Diameter { get; set; }
-
-        //triangle
-        [DisplayName("Length of edge 1")]
-        public double? Edge1 { get; set; }
-
-        [DisplayName("Length of edge 2")]
-        public double? Edge2 { get; set; }
-
-        [DisplayName("Length of edge 3")]
-        public double? Edge3 { get; set; }
-
-
-
+        public SquareAreaModel Square { get; set; }
+        public CircleAreaModel Circle { get; set; }
+        public TriangleAreaModel Triangle { get; set; }
 
         [DisplayName("Product type")]
         public ProductsModel.ProductTypes ProductType { get; set; }
@@ -47,6 +30,7 @@ namespace Material.Calculator.Models
         [DisplayName("Tonnes")]
         public double ResultsTonnes { get; set; }
 
+
         public AmountTypes AmountType { get; set; }
         [DisplayName("Type of Area")]
         public AreaTypes AreaType { get; set; }
@@ -56,7 +40,6 @@ namespace Material.Calculator.Models
             Square = 0,
             Circle = 1,
             Triangle = 2
-
         }
 
         public enum AmountTypes
@@ -64,6 +47,10 @@ namespace Material.Calculator.Models
             CubicMeter = 0,
             Tonne = 1
         }
+
+       
+
+
     }
 
 

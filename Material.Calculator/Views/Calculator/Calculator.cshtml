@@ -7,9 +7,9 @@
 
 }
 
-@Html.Partial("_heroBanner",new Banner{Title = @ViewBag.Title})
+@Html.Partial("_heroBanner", new Banner { Title = @ViewBag.Title })
 
-<link type="text/css" rel="stylesheet" href="/Content/css/CalculatorStyle.css"/>
+<link type="text/css" rel="stylesheet" href="/Content/css/CalculatorStyle.css" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script type="text/javascript">
 
@@ -32,27 +32,30 @@
 
     });
 
+    function HideAll() {
+        $("#squareArea").hide();
+        $("#triangleArea").hide();
+        $("#circleArea").hide();
+    }
+
     function leaveChange(control) {
 
         if (control.value == "0") {
             $("#imageHolder").attr("src", "/Content/img/square.png");
+            HideAll();
             $("#squareArea").show();
-            $("#triangleArea").hide();
-            $("#circleArea").hide();
 
         } else if (control.value == "1") {
 
             $("#imageHolder").attr("src", "/Content/img/circle.png");
-            $("#squareArea").hide();
-            $("#triangleArea").hide();
+            HideAll();
             $("#circleArea").show();
         } else if (control.value == "2") {
 
             $("#imageHolder").attr("src", "/Content/img/triangle.png");
-            $("#squareArea").hide();
+            HideAll();
             $("#triangleArea").show();
-            $("#circleArea").hide();
-        } 
+        }
     }
 </script>
 
@@ -60,12 +63,11 @@
     <form method="post">
 
         <feildset class="col col-lg-12">
-        
+
             <div class="row">
-                @*PRODUCT TYPE*@
-                <div class="row">
+                <div class="col col-lg-6">
                     <div class="row">
-                        <div class="col col-lg-6">
+                        <div class="col col-lg-12">
                             <legend>Area Type</legend>
                             <div class="col col-lg-6">
                                 @Html.DisplayNameFor(m => m.AreaType)
@@ -77,132 +79,179 @@
 
                             </div>
                         </div>
-                        <div class="col col-lg-6">
-                            <img id="imageHolder" src="~/Content/img/square.png"/>
-                        </div>
-                        </div>
                     </div>
-                <div class="col-lg-4">
-                    <legend>Product Type</legend>
                     <div class="row">
-                        <div class="col col-lg-6">
-                            @Html.DisplayNameFor(m => m.ProductType)
-                        </div>
-                        <div class="col col-lg-6">
-                            @Html.DropDownListFor(m => m.ProductType, new SelectList(ViewBag.ProductTypesList, "Value", "Text"),
-                                (object) new {@class = "form-control select", @placeholder = "Status"})
-
+                        <div class="col col-lg-12">
+                            <img id="imageHolder" src="~/Content/img/square.png" />
                         </div>
                     </div>
-               
+
                 </div>
                 @*AREA*@
-                <div class="col col-lg-4">
-                    <legend>Area</legend>
-                    <div id="squareArea" style="display: none">
-                        <div class="row">
-                            <div class="col col-lg-6">
-                                @Html.DisplayNameFor(m => m.Length)
+                <div class="col col-lg-6">
+                    <div class="col col-lg-12">
+                        <legend>Area</legend>
+                        <div id="squareArea" style="display: none">
+                            <div class="row">
+                                <div class="col col-lg-3">
+                                    @Html.DisplayNameFor(m => m.Square.Length)
+                                </div>
+                                <div class="col col-lg-5">
+                                    @Html.TextBoxFor(m => m.Square.Length)
+                                </div>
+                                <div class="col col-lg-4">
+                                    @Html.DropDownListFor(m => m.Square.MeasurementTypesLength, new SelectList(ViewBag.MeasurementTypes, "Value", "Text"),
+                                        (object) new {@class = "form-control select", @placeholder = "Status"})
+                                </div>
                             </div>
-                            <div class="col col-lg-6">
-                                @Html.TextBoxFor(m => m.Length)
+                            <div class="row">
+                                <div class="col col-lg-3">
+                                    @Html.DisplayNameFor(m => m.Square.Width)
+                                </div>
+                                <div class="col col-lg-5">
+                                    @Html.TextBoxFor(m => m.Square.Width)
+                                </div>
+                                <div class="col col-lg-4">
+                                    @Html.DropDownListFor(m => m.Square.MeasurementTypesWidth, new SelectList(ViewBag.MeasurementTypes, "Value", "Text"),
+                                        (object) new {@class = "form-control select", @placeholder = "Status"})
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col col-lg-6">
-                                @Html.DisplayNameFor(m => m.Width)
-                            </div>
-                            <div class="col col-lg-6">
-                                @Html.TextBoxFor(m => m.Width)
-                            </div>
-                        </div>
                         </div>
                         <div id="circleArea" style="display: none">
-                        <div class="row">
-                            <div class="col col-lg-6">
-                                @Html.DisplayNameFor(m => m.Diameter)
-                            </div>
-                            <div class="col col-lg-6">
-                                @Html.TextBoxFor(m => m.Diameter)
-                            </div>
-                        </div>
-                        </div>
-                    <div id="triangleArea" style="display: none">
-                        <div class="row">
-                            <div class="col col-lg-6">
-                                @Html.DisplayNameFor(m => m.Edge1)
-                            </div>
-                            <div class="col col-lg-6">
-                                @Html.TextBoxFor(m => m.Edge1)
+                            <div class="row">
+                                <div class="col col-lg-3">
+                                    @Html.DisplayNameFor(m => m.Circle.Diameter)
+                                </div>
+                                <div class="col col-lg-5">
+                                    @Html.TextBoxFor(m => m.Circle.Diameter)
+                                </div>
+                                <div class="col col-lg-4">
+                                    @Html.DropDownListFor(m => m.Circle.MeasurementTypes, new SelectList(ViewBag.MeasurementTypes, "Value", "Text"),
+                                        (object) new {@class = "form-control select", @placeholder = "Status"})
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col col-lg-6">
-                                @Html.DisplayNameFor(m => m.Edge2)
+                        <div id="triangleArea" style="display: none">
+                            <div class="row">
+                                <div class="col col-lg-3">
+                                    @Html.DisplayNameFor(m => m.Triangle.Edge1)
+                                </div>
+                                <div class="col col-lg-5">
+                                    @Html.TextBoxFor(m => m.Triangle.Edge1)
+                                </div>
+                                <div class="col col-lg-4">
+                                    @Html.DropDownListFor(m => m.Triangle.MeasurementTypeEdge1, new SelectList(ViewBag.MeasurementTypes, "Value", "Text"),
+                                        (object) new {@class = "form-control select", @placeholder = "Status"})
+                                </div>
                             </div>
-                            <div class="col col-lg-6">
-                                @Html.TextBoxFor(m => m.Edge2)
+                            <div class="row">
+                                <div class="col col-lg-3">
+                                    @Html.DisplayNameFor(m => m.Triangle.Edge2)
+                                </div>
+                                <div class="col col-lg-5">
+                                    @Html.TextBoxFor(m => m.Triangle.Edge2)
+                                </div>
+                                <div class="col col-lg-4">
+                                    @Html.DropDownListFor(m => m.Triangle.MeasurementTypeEdge2, new SelectList(ViewBag.MeasurementTypes, "Value", "Text"),
+                                        (object) new {@class = "form-control select", @placeholder = "Status"})
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-lg-3">
+                                    @Html.DisplayNameFor(m => m.Triangle.Edge3)
+                                </div>
+                                <div class="col col-lg-5">
+                                    @Html.TextBoxFor(m => m.Triangle.Edge3)
+                                </div>
+                                <div class="col col-lg-4">
+                                    @Html.DropDownListFor(m => m.Triangle.MeasurementTypeEdge3, new SelectList(ViewBag.MeasurementTypes, "Value", "Text"),
+                                        (object) new {@class = "form-control select", @placeholder = "Status"})
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col col-lg-6">
-                                @Html.DisplayNameFor(m => m.Edge3)
-                            </div>
-                            <div class="col col-lg-6">
-                                @Html.TextBoxFor(m => m.Edge3)
-                            </div>
-                        </div>
+
                     </div>
-                    
                 </div>
-                @*DEPTH*@
-                <div class="col col-lg-4">
-                    <legend>Depth</legend>
-                    <div class="row">
-                        <div class="col col-lg-6">
-                            @Html.DisplayNameFor(m => m.Depth)
+            </div>
+
+            @*PRODUCT TYPE*@
+            <div class="row">
+                <div class="row col-lg-12">
+                    <div class="col-lg-6">
+                        <legend>Product Type</legend>
+                        <div class="row">
+                            <div class="col col-lg-6">
+                                @Html.DisplayNameFor(m => m.ProductType)
+                            </div>
+                            <div class="col col-lg-6">
+                                @Html.DropDownListFor(m => m.ProductType, new SelectList(ViewBag.ProductTypesList, "Value", "Text"),
+                                    (object) new {@class = "form-control select", @placeholder = "Status"})
+
+                            </div>
                         </div>
-                        <div class="col col-lg-6">
-                            @Html.TextBoxFor(m => m.Depth)
+
+                    </div>
+
+                    @*DEPTH*@
+                    <div class="col col-lg-6">
+                        <legend>Depth</legend>
+                        <div class="row">
+                            <div class="col col-lg-3">
+                                @Html.DisplayNameFor(m => m.Depth)
+                            </div>
+                            <div class="col col-lg-5">
+                                @Html.TextBoxFor(m => m.Depth)
+                            </div>
+                            <div class="col col-lg-4">
+                                @Html.DropDownListFor(m => m.DepthMeasurementTypes, new SelectList(ViewBag.MeasurementTypes, "Value", "Text"),
+                                    (object) new {@class = "form-control select", @placeholder = "Status"})
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-       
             @if (Model.ResultsCubes > 0 || Model.ResultsTonnes > 0)
             {
-            <legend>Results</legend>
-          
-            <div class="row results">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <legend>Results</legend>
+
+                        <div class="row results">
 
 
-                @if (Model.ResultsCubes > 0)
-                {
-                    <div class="col-lg-1">
-                        @Html.DisplayNameFor(m => m.ResultsCubes)
+                            @if (Model.ResultsCubes > 0)
+                            {
+                                <div class="col-lg-6">
+                                    <div class="col-lg-3">
+                                        @Html.DisplayNameFor(m => m.ResultsCubes)
+                                    </div>
+                                    <div class="col-lg-3">
+                                        @Html.TextBoxFor(m => m.ResultsCubes, new { @disabled = "disabled" })
+                                    </div>
+                                </div>
+                            }
+
+
+                            @if (Model.ResultsTonnes > 0)
+                            {
+                                <div class="col-lg-6">
+                                    <div class="col-lg-3">
+                                        @Html.DisplayNameFor(m => m.ResultsTonnes)
+                                    </div>
+                                    <div class="col-lg-3">
+                                        @Html.TextBoxFor(m => m.ResultsTonnes, new { @disabled = "disabled" })
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
                     </div>
-                    <div class="col-lg-4">
-                        @Html.TextBoxFor(m => m.ResultsCubes, new { @disabled = "disabled" })
-                    </div>
-                }
-
-
-                @if (Model.ResultsTonnes > 0)
-                {
-                    <div class="col-lg-1">
-                        @Html.DisplayNameFor(m => m.ResultsTonnes)
-                    </div>
-                    <div class="col-lg-4">
-                        @Html.TextBoxFor(m => m.ResultsTonnes, new { @disabled = "disabled" })
-
-                    </div>
-                }
-            </div>
-                }
+                </div>
+            }
             @*BUTTONS*@
             <div class="row buttons">
                 <div class="col-lg-4">
-                    <input type="submit" value="GO"/>
+                    <input type="submit" value="Calculate" />
                 </div>
             </div>
             <div class="row buttons">
@@ -212,10 +261,10 @@
             </div>
         </feildset>
     </form>
-   
-    </div>
 
-    @*<style>
+</div>
+
+@*<style>
         body {
             background: gray;
             color: white;

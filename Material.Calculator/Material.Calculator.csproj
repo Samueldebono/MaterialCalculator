@@ -133,7 +133,11 @@
     </Compile>
     <Compile Include="Models\Banner\Banner.cs" />
     <Compile Include="Models\CalculatorModel.cs" />
+    <Compile Include="Models\CircleAreaModel.cs" />
+    <Compile Include="Models\MeasurementModel.cs" />
     <Compile Include="Models\ProductsModel.cs" />
+    <Compile Include="Models\SquareAreaModel.cs" />
+    <Compile Include="Models\TriangleAreaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\BusinessClients.cs" />
     <Compile Include="Utility\GlobalConversions.cs" />

@@ -20,6 +20,8 @@ namespace Material.Calculator.Controllers
                 BusinessClients.GlobalsBusiness.GetProductypes();
             ViewBag.AreaTypesList = await 
                 BusinessClients.GlobalsBusiness.GetAreaTypes();
+            ViewBag.MeasurementTypes = await 
+                BusinessClients.GlobalsBusiness.GetMeasurementTypes();
 
             CalculatorModel model = new CalculatorModel();
             return View(model);
@@ -31,41 +33,51 @@ namespace Material.Calculator.Controllers
                 BusinessClients.GlobalsBusiness.GetProductypes();
             ViewBag.AreaTypesList = await
                 BusinessClients.GlobalsBusiness.GetAreaTypes();
+            ViewBag.MeasurementTypes = await
+                BusinessClients.GlobalsBusiness.GetMeasurementTypes();
 
-           
 
             return View(Calculate(model));
         }
 
         private CalculatorModel Calculate(CalculatorModel model)
         {
+            var depth = BusinessClients.GlobalsBusiness.ConvertToMillimetres(model.DepthMeasurementTypes, model.Depth);
             switch (model.AreaType)
             {
                 case CalculatorModel.AreaTypes.Circle:
-                    if (model.Diameter.HasValue)
+                    if (model.Circle.Diameter.HasValue)
                     {
-                        var radis = model.Diameter.Value / 2;
-                        model.ResultsCubes = ((radis * radis) * Math.PI) * (model.Depth / 10);
+                        var radis = BusinessClients.GlobalsBusiness.ConvertToMillimetres(model.Circle.MeasurementTypes, model.Circle.Diameter.Value) / 2;
+                        model.ResultsCubes = ((radis * radis) * Math.PI) * depth;
                     }
 
                     break;
                 case CalculatorModel.AreaTypes.Triangle:
-                    if (model.Edge1.HasValue && model.Edge2.HasValue && model.Edge3.HasValue)
+                    if (model.Triangle.Edge1.HasValue && model.Triangle.Edge2.HasValue && model.Triangle.Edge3.HasValue)
                     {
-                        var p = (model.Edge1.Value + model.Edge2.Value + model.Edge3.Value) / 2;
-                        var area = Math.Sqrt(p * (p - model.Edge1.Value) * (p - model.Edge1.Value) *
-                                             (p - model.Edge3.Value));
-                        model.ResultsCubes = area * (model.Depth / 10);
+                        var edge1 = BusinessClients.GlobalsBusiness.ConvertToMillimetres(model.Triangle.MeasurementTypeEdge1,model.Triangle.Edge1.Value);
+                        var edge2 = BusinessClients.GlobalsBusiness.ConvertToMillimetres(model.Triangle.MeasurementTypeEdge2,model.Triangle.Edge2.Value);
+                        var edge3 = BusinessClients.GlobalsBusiness.ConvertToMillimetres(model.Triangle.MeasurementTypeEdge3,model.Triangle.Edge3.Value);
+
+                        var p = (edge1 + edge2 + edge3) / 2;
+                        var area = Math.Sqrt(p * (p - edge1) * (p - edge2) * (p - edge3));
+                        model.ResultsCubes = area * depth;
                     }
 
                     break;
                 case CalculatorModel.AreaTypes.Square:
-                    if (model.Length.HasValue && model.Width.HasValue)
-                        model.ResultsCubes = model.Length.Value * model.Width.Value * (model.Depth / 10);
+                    if (model.Square.Length.HasValue && model.Square.Width.HasValue)
+                        model.ResultsCubes = BusinessClients.GlobalsBusiness.ConvertToMillimetres(model.Square.MeasurementTypesLength, model.Square.Length.Value)
+                                             * BusinessClients.GlobalsBusiness.ConvertToMillimetres(model.Square.MeasurementTypesWidth, model.Square.Width.Value)
+                                             * depth;
                     break;
             }
-            if (model.Length.HasValue && model.Width.HasValue)
-                model.ResultsCubes = model.Length.Value * model.Width.Value * (model.Depth / 10);
+
+            //if (model.Square.Length.HasValue && model.Square.Width.HasValue)
+            //    model.ResultsCubes = BusinessClients.GlobalsBusiness.ConvertToMillimetres(model.Square.MeasurementTypesLength,model.Square.Length.Value) 
+            //                         * BusinessClients.GlobalsBusiness.ConvertToMillimetres(model.Square.MeasurementTypesWidth, model.Square.Width.Value)
+            //                         * depth;
 
             model.ResultsTonnes = BusinessClients.GlobalsBusiness.GetConversationRate(model.ProductType, model.ResultsCubes);
 
